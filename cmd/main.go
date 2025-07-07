@@ -1,9 +1,7 @@
 package main
 
 import (
-	"log"
-
-	"github.com/jalvere00/task-tracker/internal/app"
+	"github.com/jalvere00/task-tracker/internal/cli"
 )
 
 // Task Tracker Application
@@ -19,8 +17,39 @@ import (
 // cobra is not standard, use "flags" library instead
 // us library "encoding/json"
 func main() {
-	a := app.NewApp()
-	if err := a.Run(); err != nil {
-		log.Fatalf("Error running the application: %v", err)
-	}
+	cli.HandleCommands()
+	// taskList := task.NewTaskList()
+	// taskList.AddTask("Implement user authentication")
+	// taskList.AddTask("Design database schema")
+	// taskList.AddTask("Create REST API endpoints")
+	// taskList.AddTask("Write unit tests for task management")
+
+	// task1, err := taskList.GetTaskById(3)
+	// if err != nil {
+	// 	fmt.Println("Error:", err)
+	// 	return
+	// }
+	// fmt.Println("Get Task by ID:", task1.String())
+
+	// tl := task.NewTaskList()
+	// tl.AddTask("ToDo 1 task")
+	// tl.AddTask("ToDo 2 task")
+
+	// task2 := tl.AddTask("Progress 1 task")
+	// tl.MarkTaskAsInProgress(task2.ID)
+	// task2 = tl.AddTask("Progress 2 task")
+	// tl.MarkTaskAsInProgress(task2.ID)
+
+	// task2 = tl.AddTask("Done task")
+	// tl.MarkTaskAsDone(task2.ID)
+	// task2 = tl.AddTask("Done task")
+	// tl.MarkTaskAsDone(task2.ID)
+
+	// json.ExportTaskListToFile("output.json", tl)
+	// importTask, err := json.ImportTaskListFromFile("output.json")
+	// if err != nil {
+	// 	fmt.Println("Error importing task list:", err)
+	// 	return
+	// }
+	// fmt.Printf("Imported Task List: %+v\n", importTask)
 }
