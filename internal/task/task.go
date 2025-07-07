@@ -1,6 +1,7 @@
 package task
 
 import (
+	"fmt"
 	"time"
 )
 
@@ -12,12 +13,16 @@ type Task struct {
 	UpdatedAt   string     `json:"updated_at"`  // ISO 8601 format
 }
 
-func NewTask(id int, task string) Task {
-	return Task{
+func NewTask(id int, task string) *Task {
+	return &Task{
 		ID:          id,
 		Description: task,
 		Status:      StatusToDo,
 		CreatedAt:   time.Now().Format(time.RFC3339),
 		UpdatedAt:   time.Now().Format(time.RFC3339),
 	}
+}
+
+func (t *Task) String() string {
+	return fmt.Sprintf("%+v\n", *t)
 }

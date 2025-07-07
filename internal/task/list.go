@@ -6,63 +6,67 @@ import (
 )
 
 type TaskList struct {
-	tasks  []Task
-	nextId int
+	Tasks  []*Task `json:"tasks"`
+	NextId int     `json:"next_id"` // The next ID to be assigned to a new task
 }
 
 func NewTaskList() *TaskList {
 	return &TaskList{
-		tasks:  []Task{},
-		nextId: 1,
+		Tasks:  []*Task{},
+		NextId: 1,
 	}
 }
 
+func (tl *TaskList) GetNextId() int {
+	return tl.NextId
+}
+
 func (tl *TaskList) AddTask(description string) *Task {
-	task := NewTask(tl.nextId, description)
-	tl.tasks = append(tl.tasks, task)
-	tl.nextId++
-	return &task
+	task := NewTask(tl.NextId, description)
+	tl.Tasks = append(tl.Tasks, task)
+	tl.NextId++
+	return task
 }
 
-func (tl *TaskList) GetAllTasks() *[]Task {
-	return &tl.tasks
+func (tl *TaskList) GetAllTasks() []*Task {
+	return tl.Tasks
 }
 
-func (tl *TaskList) GetTasksByStatus(status TaskStatus) *[]Task {
-	var filteredTasks []Task
-	for _, task := range tl.tasks {
+func (tl *TaskList) GetTasksByStatus(status TaskStatus) []*Task {
+	var filteredTasks []*Task
+	for _, task := range tl.Tasks {
 		if task.Status == status {
 			filteredTasks = append(filteredTasks, task)
 		}
 	}
-	return &filteredTasks
+	return filteredTasks
 }
 
-func (tl *TaskList) GetToDoTasks() *[]Task {
+func (tl *TaskList) GetToDoTasks() []*Task {
 	return tl.GetTasksByStatus(StatusToDo)
 }
 
-func (tl *TaskList) GetInProgressTasks() *[]Task {
+func (tl *TaskList) GetInProgressTasks() []*Task {
 	return tl.GetTasksByStatus(StatusInProgress)
 }
 
-func (tl *TaskList) GetDoneTasks() *[]Task {
+func (tl *TaskList) GetDoneTasks() []*Task {
 	return tl.GetTasksByStatus(StatusDone)
 }
 
 func (tl *TaskList) GetTaskById(id int) (*Task, error) {
-	for _, task := range tl.tasks {
+	for _, task := range tl.Tasks {
 		if task.ID == id {
-			return &task, nil
+			return task, nil
 		}
 	}
 	return nil, fmt.Errorf("task with ID %d not found", id)
 }
 
 func (tl *TaskList) DeleteTask(id int) error {
-	for i, task := range tl.tasks {
+	for i, task := range tl.Tasks {
 		if task.ID == id {
-			tl.tasks = append(tl.tasks[:i], tl.tasks[i+1:]...)
+			tl.Tasks = append(tl.Tasks[:i], tl.Tasks[i+1:]...)
 			return nil
 		}
 	}
