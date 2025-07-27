@@ -3,7 +3,6 @@ package cli
 import (
 	"fmt"
 	"os"
-	"strconv"
 
 	"github.com/jalvere00/task-tracker/internal/task"
 )
@@ -14,9 +13,9 @@ func UpdateTask(taskList *task.TaskList) error {
 		return fmt.Errorf("task ID and new description are required to update a task")
 	}
 
-	taskID, err := strconv.Atoi(args[0])
+	taskID, err := parseTaskID(args[0])
 	if err != nil {
-		return fmt.Errorf("invalid task ID: %v", err)
+		return err
 	}
 
 	newDescription := args[1]
@@ -26,5 +25,6 @@ func UpdateTask(taskList *task.TaskList) error {
 	}
 
 	t.Description = newDescription
+	fmt.Printf("Task updated task successfully")
 	return nil
 }

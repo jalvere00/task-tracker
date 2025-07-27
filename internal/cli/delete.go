@@ -3,7 +3,6 @@ package cli
 import (
 	"fmt"
 	"os"
-	"strconv"
 
 	"github.com/jalvere00/task-tracker/internal/task"
 )
@@ -14,7 +13,7 @@ func DeleteTask(taskList *task.TaskList) error {
 		return fmt.Errorf("delete command requires an taskID")
 	}
 
-	taskID, err := strconv.Atoi(args[0])
+	taskID, err := parseTaskID(args[0])
 	if err != nil {
 		return err
 	}
@@ -24,5 +23,6 @@ func DeleteTask(taskList *task.TaskList) error {
 		return err
 	}
 
+	fmt.Printf("Task deleted task successfully (ID: %d)\n", taskID)
 	return nil
 }

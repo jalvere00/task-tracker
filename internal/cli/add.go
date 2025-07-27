@@ -13,6 +13,7 @@ func AddTask(taskList *task.TaskList) error {
 		return fmt.Errorf("description is required to add a task")
 	}
 	description := args[0]
-	taskList.AddTask(description)
+	t := taskList.AddTask(description)
+	fmt.Printf("Task added successfully (ID: %d)\n", t.ID)
 	return nil
 }
