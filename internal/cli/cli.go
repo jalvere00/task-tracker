@@ -26,19 +26,24 @@ func HandleCommands() {
 
 	switch args[1] {
 	case "add":
-		fmt.Println("Adding Command")
+		err = AddTask(taskList)
 	case "update":
-		fmt.Println("Update Command")
+		err = UpdateTask(taskList)
 	case "delete":
-		fmt.Println("Delete Command")
+		err = DeleteTask(taskList)
 	case "mark-in-progress":
-		fmt.Println("Marking Task as In-Progress")
+		err = MarkTaskAsInProgress(taskList)
 	case "mark-done":
-		fmt.Println("Marking Task as Done")
+		err = MarkTaskAsDone(taskList)
 	case "list":
-		fmt.Println("Listing Tasks")
+		err = ListTasksHandler(taskList)
 	default:
 		fmt.Println("Error")
+	}
+
+	if err != nil {
+		fmt.Printf("Error: %v\n", err)
+		os.Exit(1)
 	}
 
 }
